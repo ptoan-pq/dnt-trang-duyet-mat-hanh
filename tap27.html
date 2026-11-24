@@ -1,4 +1,4 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"></head><body><title>Duyệt Mật hạnh Tập 27</title>
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body><title>Duyệt Mật hạnh Tập 27</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Noto+Serif:wght@400;600&display=swap">
 <style>
@@ -95,6 +95,7 @@ textarea{width:100%;min-height:110px;font-family:var(--f-text);font-size:15.5px;
 .sc.mat{background:var(--mh-bg)}
 .sc.gone .t{color:var(--muted);font-family:var(--f-ui);font-size:13.5px;font-style:italic}
 .sc .id{font-weight:600;font-size:13px;min-width:56px;font-variant-numeric:tabular-nums;padding-top:3px;color:var(--muted)}
+.ng{display:block;height:.55em}
 .sc .t{flex:1;min-width:0;font-family:var(--f-text);font-size:15.5px;line-height:1.7}
 .arr{display:inline-flex;gap:4px;margin-left:auto}
 .arr button{padding:1px 8px;font-size:13px}
@@ -150,13 +151,25 @@ let mode=2,filter='all',dec={},db=null;
 function hunks(a,b){const A=(a||'').split(/\s+/).filter(Boolean),B=(b||'').split(/\s+/).filter(Boolean),n=A.length,m=B.length,L=[];for(let i=0;i<=n;i++)L.push(new Uint16Array(m+1));for(let i=n-1;i>=0;i--)for(let j=m-1;j>=0;j--)L[i][j]=A[i]===B[j]?L[i+1][j+1]+1:Math.max(L[i+1][j],L[i][j+1]);let i=0,j=0;const ops=[];while(i<n||j<m){if(i<n&&j<m&&A[i]===B[j]){ops.push(['=',A[i]]);i++;j++}else if(j>=m||(i<n&&L[i+1][j]>=L[i][j+1])){ops.push(['-',A[i]]);i++}else{ops.push(['+',B[j]]);j++}}
 const seg=[];let c={t:'=',a:[],b:[]};const push=()=>{if(c.a.length||c.b.length)seg.push(c)};for(const [t,w] of ops){if(t==='='){if(c.t!=='='){push();c={t:'=',a:[],b:[]}}c.a.push(w);c.b.push(w)}else{if(c.t==='='){push();c={t:'x',a:[],b:[]}}(t==='-'?c.a:c.b).push(w)}}push();
 for(let k=1;k<seg.length-1;k++){if(seg[k].t==='='&&seg[k].a.length<=3&&seg[k-1].t==='x'&&seg[k+1].t==='x'){const x=seg[k-1];x.a.push(...seg[k].a,...seg[k+1].a);x.b.push(...seg[k].b,...seg[k+1].b);seg.splice(k,2);k--}}return seg}
+// Lời dài: tự xuống dòng ở đầu câu (anh dặn 23-11-2026). Cùng luật với ngat_doan.py; chỉ thêm chỗ ngắt, không đổi chữ.
+const ND={dai:420,doan:380,moc:150,conLai:120,cho:220};
+const MOC=/^(Thưa|Bạch|Kính thưa|Lần khác|Có lần|Từ đó|Ngoài ra)[\s,]/,NOI=/^(Thế là|Thế nên|Nhưng|Vì|Do đó|Nên|Cho nên|Rồi|Và|Mà|Thì|Giống như|Bởi)[\s,]/;
+function diemNgat(t){if(!t||t.length<ND.dai)return[];const re=/[.?!…]["”']?\s+(?=\S)/g,ends=[];let m;while((m=re.exec(t)))ends.push(m.index+m[0].length);
+const out=[];let last=0;for(let i=0;i<ends.length;i++){const p=ends[i],c=t[p];if(!(c!==c.toLowerCase()||c==='"'||c==='“'))continue;if(t.length-p<ND.conLai)break;const cur=p-last,rest=t.slice(p);
+if(cur>=ND.moc&&MOC.test(rest)){out.push(p);last=p;continue}
+if(cur>=ND.doan&&!NOI.test(rest)&&!ends.some(q=>q>p&&q<p+ND.cho&&MOC.test(t.slice(q)))){out.push(p);last=p}}return out}
+const DEC={'&amp;':'&','&lt;':'<','&gt;':'>','&quot;':'"'};
+function ngat(h){if(!h||h.length<ND.dai)return h;const vis=[],pos=[];let inT=false;
+for(let i=0;i<h.length;i++){const c=h[i];if(inT){if(c==='>')inT=false;continue}if(c==='<'){inT=true;continue}
+if(c==='&'){const j=h.indexOf(';',i);if(j>0&&j-i<7&&DEC[h.slice(i,j+1)]){vis.push(DEC[h.slice(i,j+1)]);pos.push(i);i=j;continue}}vis.push(c);pos.push(i)}
+const cuts=diemNgat(vis.join(''));if(!cuts.length)return h;let out='',a=0;for(const k of cuts){const sp=pos[k-1];out+=h.slice(a,sp)+'<span class="ng"></span>';a=sp+1}return out+h.slice(a)}
 const nz=s=>(s||'').replace(/\s+/g,' ').trim();
 const same=(a,b)=>(a==null)===(b==null)&&nz(a)===nz(b);
 const pn=s=>(s||'').replace(/\s+([:;,.?!…])/g,'$1');const nWords=(a,b)=>hunks(pn(a),pn(b)).filter(h=>h.t!=='=').reduce((s,h)=>s+h.a.length+h.b.length,0);
 const big=(g,x)=>g==null||x==null?!(g==null&&x==null):nWords(g,x)>2;
-function topLine(g,x){if(g==null)return '<span class="empty">Gốc không có cảnh này.</span>';if(x==null)return '<span class="o">'+esc(g)+'</span>';return hunks(g,x).map(h=>h.t==='='?esc(h.a.join(' ')):(h.a.length?'<span class="o">'+esc(h.a.join(' '))+'</span>':'')).filter(Boolean).join(' ')}
-function botLine(g,x){if(g==null)return '<span class="n">'+esc(x)+'</span>';return hunks(g,x).map(h=>h.t==='='?esc(h.b.join(' ')):(h.b.length?'<span class="n">'+esc(h.b.join(' '))+'</span>':'')).filter(Boolean).join(' ')}
-function inLine(g,x){if(g==null)return '<ins>'+esc(x)+'</ins>';return hunks(g,x).map(h=>h.t==='='?esc(h.a.join(' ')):(h.a.length?'<del>'+esc(h.a.join(' '))+'</del>':'')+(h.a.length&&h.b.length?' ':'')+(h.b.length?'<ins>'+esc(h.b.join(' '))+'</ins>':'')).join(' ')}
+const topLine=(g,x)=>ngat(_topLine(g,x));function _topLine(g,x){if(g==null)return '<span class="empty">Gốc không có cảnh này.</span>';if(x==null)return '<span class="o">'+esc(g)+'</span>';return hunks(g,x).map(h=>h.t==='='?esc(h.a.join(' ')):(h.a.length?'<span class="o">'+esc(h.a.join(' '))+'</span>':'')).filter(Boolean).join(' ')}
+const botLine=(g,x)=>ngat(_botLine(g,x));function _botLine(g,x){if(g==null)return '<span class="n">'+esc(x)+'</span>';return hunks(g,x).map(h=>h.t==='='?esc(h.b.join(' ')):(h.b.length?'<span class="n">'+esc(h.b.join(' '))+'</span>':'')).filter(Boolean).join(' ')}
+const inLine=(g,x)=>ngat(_inLine(g,x));function _inLine(g,x){if(g==null)return '<ins>'+esc(x)+'</ins>';return hunks(g,x).map(h=>h.t==='='?esc(h.a.join(' ')):(h.a.length?'<del>'+esc(h.a.join(' '))+'</del>':'')+(h.a.length&&h.b.length?' ':'')+(h.b.length?'<ins>'+esc(h.b.join(' '))+'</ins>':'')).join(' ')}
 const CB=Object.fromEntries(D.canh.map(c=>[c.id,c])),CU=Object.fromEntries(D.cum.map(c=>[c.id,c])),IT=Object.fromEntries(D.items.map(x=>[x.id,x]));
 const cuOf={};D.cum.forEach(c=>c.canh.forEach(s=>cuOf[s]=c.id));
 const GOPOF={};D.items.forEach(x=>(x.gop||[]).forEach(s=>GOPOF[s]=x.id));
@@ -190,7 +203,7 @@ if(mvOpen===id)h+='<div class="mv">Đặt cụm này sau cụm <select id="mv-se
 if(!open){if(its.length)h+='<div class="chg">Cảnh có sửa: '+its.map(s=>'<a href="#" data-go="'+s+'">'+s+(K[s].em?' ●':'')+'</a>').join('')+'</div>'}
 el.innerHTML=h;
 if(open){const ls=document.createElement('div');ls.className='ls';if(its.length>1)ls.innerHTML='<div class="bulk">Chọn nhanh cả cụm: <button data-bulk="dong_y" data-cum="'+id+'">Theo đề xuất của em</button><button data-bulk="chon_v3" data-cum="'+id+'">Theo bản '+B3+'</button>'+(HAS_DL?'<button data-bulk="chon_dl" data-cum="'+id+'">Theo bản '+BD+'</button>':'')+'<button data-bulk="undo" data-cum="'+id+'">Bỏ chọn cả cụm</button></div>';let hidden=0;const flush=()=>{if(hidden){const g=document.createElement('div');g.className='gap';g.textContent='… '+hidden+' cảnh không có sửa';ls.appendChild(g);hidden=0}};
-l.forEach(sid=>{const it=IT[sid];const dq=it&&(dec[slug(sid)]||{}).quyet;if(it&&filter==='chua'&&dq){const t=textOf(it,dq);const r=document.createElement('div');r.className='sc'+(CB[sid].mat?' mat':'');r.innerHTML='<span class="id">'+esc(sid)+'</span><span class="t">'+(t==null?'<span class="empty">(bỏ cảnh)</span>':esc(t))+' <a href="#" class="chip c-acc" data-show="'+sid+'">'+QUYET[dq]+' · mở thẻ</a></span>'+arrows(sid);ls.appendChild(r);return}if(it){const cd=document.createElement('div');cd.className='card inl'+((dec[slug(sid)]||{}).quyet?' done':'');cd.id='c-'+slug(sid);cd.dataset.id=sid;cd.innerHTML=card(it);ls.appendChild(cd)}else{const sc=CB[sid];const r=document.createElement('div');const gone=gopHidden(sid);r.className='sc'+(sc.mat?' mat':'')+(gone?' gone':'');r.innerHTML='<span class="id">'+esc(sid==='_dau'?'Tên tập':sid)+'</span><span class="t">'+(gone?'Đã thay bằng dòng tóm tắt của bản '+BD+' ở cảnh '+esc(GOPOF[sid])+'.':esc(sc.t))+'</span>'+arrows(sid);ls.appendChild(r)}});flush();el.appendChild(ls)}
+l.forEach(sid=>{const it=IT[sid];const dq=it&&(dec[slug(sid)]||{}).quyet;if(it&&filter==='chua'&&dq){const t=textOf(it,dq);const r=document.createElement('div');r.className='sc'+(CB[sid].mat?' mat':'');r.innerHTML='<span class="id">'+esc(sid)+'</span><span class="t">'+(t==null?'<span class="empty">(bỏ cảnh)</span>':ngat(esc(t)))+' <a href="#" class="chip c-acc" data-show="'+sid+'">'+QUYET[dq]+' · mở thẻ</a></span>'+arrows(sid);ls.appendChild(r);return}if(it){const cd=document.createElement('div');cd.className='card inl'+((dec[slug(sid)]||{}).quyet?' done':'');cd.id='c-'+slug(sid);cd.dataset.id=sid;cd.innerHTML=card(it);ls.appendChild(cd)}else{const sc=CB[sid];const r=document.createElement('div');const gone=gopHidden(sid);r.className='sc'+(sc.mat?' mat':'')+(gone?' gone':'');r.innerHTML='<span class="id">'+esc(sid==='_dau'?'Tên tập':sid)+'</span><span class="t">'+(gone?'Đã thay bằng dòng tóm tắt của bản '+BD+' ở cảnh '+esc(GOPOF[sid])+'.':ngat(esc(sc.t)))+'</span>'+arrows(sid);ls.appendChild(r)}});flush();el.appendChild(ls)}
 box.appendChild(el);const w=D.canh_bao.find(x=>x[0]===id&&x[1]===cumOrder[i+1]);if(w){const p=document.createElement('p');p.className='warn';p.textContent='Lưu ý: '+w[2];box.appendChild(p)}});
 stats();window.scrollTo(0,y)}
 function moveScene(cid,k,d){const j=k+d,l=innerOf(cid).slice();if(j<0||j>=l.length)return;[l[k],l[j]]=[l[j],l[k]];inner[cid]=l;renderBlocks();queueOrder()}
@@ -229,8 +242,8 @@ function setFilter(f){filter=f;document.querySelectorAll('[data-f]').forEach(x=>
 document.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>setFilter(b.dataset.f));
 document.getElementById('tai').onclick=taiVe;document.getElementById('nap').onclick=()=>document.getElementById('nap-file').click();document.getElementById('nap-file').onchange=e=>{if(e.target.files[0])napFile(e.target.files[0]);e.target.value=''};
 lsLoad();
-renderBlocks();
-(async()=>{let got=false;const t=setTimeout(()=>{if(!got)setSave('Chưa kết nối được nơi lưu. Anh vẫn xem được; lựa chọn chỉ lưu khi có kết nối.',true)},10000);
+dec={"27-106": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T01:13:38.981Z"}, "27-110": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T01:13:58.943Z"}, "27-239": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T01:17:07.029Z"}, "27-235": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T01:16:35.704Z"}, "27-171": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T01:15:15.522Z"}, "27-170": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T01:14:31.172Z"}, "27-234": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T01:16:32.667Z"}, "27-238": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T01:16:46.480Z"}, "27-177": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T01:15:29.597Z"}, "27-175": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T01:15:29.597Z"}, "27-174": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T01:15:29.597Z"}, "27-240": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T01:17:09.779Z"}, "27-173": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T01:15:29.597Z"}, "27-238A": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T01:16:56.864Z"}, "27-237": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T01:16:43.363Z"}, "27-109": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T01:13:53.756Z"}, "27-236": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T01:16:39.729Z"}};cumOrder=["C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10", "C11", "C12", "C13", "C14", "C15", "C16", "C17", "C18"];inner={};renderBlocks();
+(async()=>{setSave("Tập 27 đã duyệt xong 24-11-2026: anh đồng ý đề xuất cả 17 thẻ. Đã có Word.",false);return;let got=false;const t=setTimeout(()=>{if(!got)setSave('Chưa kết nối được nơi lưu. Anh vẫn xem được; lựa chọn chỉ lưu khi có kết nối.',true)},10000);
   try{db=window.claude?await window.claude.use('db'):null}catch(e){db=null}
   if(!db){clearTimeout(t);setSave(Object.keys(dec).length?'Đã mở lại lựa chọn lưu trong trình duyệt này.':'Lựa chọn sẽ lưu trong trình duyệt này. Duyệt xong anh bấm "Tải lựa chọn về".');return}
   db.collection(COL_D).onSnapshot(snap=>{got=true;clearTimeout(t);const nd={};snap.docs.forEach(s=>{if(s.exists)nd[s.id]=Object.assign({},s.data())});dec=nd;const editing=document.activeElement&&document.activeElement.tagName==='TEXTAREA';if(!editing)renderBlocks();else stats();setSave(snap.metadata.hasPendingWrites?'Đang lưu…':'Đã lưu, đã đồng bộ')},e=>{clearTimeout(t);setSave('Không đọc được lựa chọn đã lưu ('+(e&&e.code||'lỗi')+'). Tải lại trang để thử lại.',true)});
