@@ -1,4 +1,4 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"></head><body><title>Duyệt Mật hạnh Tập 38</title>
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body><!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"></head><body><title>Duyệt Mật hạnh Tập 38</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Noto+Serif:wght@400;600&display=swap">
 <style>
@@ -229,8 +229,8 @@ function setFilter(f){filter=f;document.querySelectorAll('[data-f]').forEach(x=>
 document.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>setFilter(b.dataset.f));
 document.getElementById('tai').onclick=taiVe;document.getElementById('nap').onclick=()=>document.getElementById('nap-file').click();document.getElementById('nap-file').onchange=e=>{if(e.target.files[0])napFile(e.target.files[0]);e.target.value=''};
 lsLoad();
-renderBlocks();
-(async()=>{let got=false;const t=setTimeout(()=>{if(!got)setSave('Chưa kết nối được nơi lưu. Anh vẫn xem được; lựa chọn chỉ lưu khi có kết nối.',true)},10000);
+dec={"38-174": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T22:13:15.102Z"}, "38-173": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T22:12:47.533Z"}, "38-236": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T22:15:59.673Z"}, "38-172": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T22:12:02.023Z"}, "38-235": {"quyet": "chon_v3", "van": null, "luc": "2026-11-24T22:15:14.235Z"}, "38-171": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T22:11:40.405Z"}, "38-234": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T22:14:16.121Z"}, "38-032": {"quyet": "tu_sua", "van": "Tôn giả Maha Kaccana (Ca chiên diên) đáp: Thưa hiền giả Rahula, tôi cũng thuyết phục được vua xứ Avanti tin kính Tam Bảo, rồi nhờ sự mở lòng của vua mà tôi cũng giáo hóa dân chúng biết kính tin Thế Tôn, Chánh Pháp, Chúng Tăng. À, tôi cũng nghe các vị tôn giả khen hiền giả Rahula có mật hạnh cao cả, âm thầm, tinh tế, không thể nghĩ bàn. Công hạnh của hiền giả Rahula thật đáng ngưỡng mộ tán thán. À, hai vị ở đây bàn luận về điều gì, có thể chia sẻ với tôi được không ạ?", "luc": "2026-11-24T22:11:14.536Z"}, "38-176": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T22:13:50.821Z"}, "38-025": {"quyet": "dong_y", "van": null, "luc": "2026-11-24T22:07:58.705Z"}};cumOrder=["C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10", "C11", "C12", "C13", "C14", "C15", "C16", "C17", "C18", "C19"];inner={};renderBlocks();
+(async()=>{setSave("Tập 38 đã duyệt xong 24-11-2026: anh đồng ý đề xuất 8 thẻ, tự sửa 38.032, chọn bản anh ở 38.235. Đã có Word.",false);return;let got=false;const t=setTimeout(()=>{if(!got)setSave('Chưa kết nối được nơi lưu. Anh vẫn xem được; lựa chọn chỉ lưu khi có kết nối.',true)},10000);
   try{db=window.claude?await window.claude.use('db'):null}catch(e){db=null}
   if(!db){clearTimeout(t);setSave(Object.keys(dec).length?'Đã mở lại lựa chọn lưu trong trình duyệt này.':'Lựa chọn sẽ lưu trong trình duyệt này. Duyệt xong anh bấm "Tải lựa chọn về".');return}
   db.collection(COL_D).onSnapshot(snap=>{got=true;clearTimeout(t);const nd={};snap.docs.forEach(s=>{if(s.exists)nd[s.id]=Object.assign({},s.data())});dec=nd;const editing=document.activeElement&&document.activeElement.tagName==='TEXTAREA';if(!editing)renderBlocks();else stats();setSave(snap.metadata.hasPendingWrites?'Đang lưu…':'Đã lưu, đã đồng bộ')},e=>{clearTimeout(t);setSave('Không đọc được lựa chọn đã lưu ('+(e&&e.code||'lỗi')+'). Tải lại trang để thử lại.',true)});
@@ -238,4 +238,4 @@ renderBlocks();
 })();
 })();
 </script>
-</body></html>
+</body></html></body></html>
