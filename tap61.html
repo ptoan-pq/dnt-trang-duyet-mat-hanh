@@ -1,4 +1,4 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"></head><body><title>Duyệt Mật hạnh Tập 61</title>
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body><!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"></head><body><title>Duyệt Mật hạnh Tập 61</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Noto+Serif:wght@400;600&display=swap">
 <style>
@@ -257,8 +257,8 @@ if(AB){const q=(i)=>document.getElementById(i);q('sub').textContent='Duyệt s�
 q('hint').textContent='Mở cụm là đọc trọn từng cảnh. Cảnh cần sửa hiện thành thẻ ngay tại chỗ, gồm các dòng: kịch bản gốc, phương án A (sửa nhẹ), phương án B (sửa mạnh hơn), kèm lý do và điều bị mất của từng phương án. Dòng đang được dùng có viền xanh; chưa chọn thì mặc định hiện A. Chữ tô xanh là chữ khác gốc; trên dòng gốc, chữ tô đỏ là chữ bị bỏ ở dòng đang dùng. Cảnh không cần sửa luôn hiện đủ, để đọc liền mạch cả tập. Bấm Chọn A, Chọn B, Giữ gốc, Tự sửa hoặc Ghi chú; bấm lại nút đang chọn để bỏ chọn. Trong mỗi cụm có nút chọn nhanh cả cụm theo A hoặc theo B. Mũi tên ở đầu cụm dời cả cụm. Mọi lựa chọn được lưu lại.';
 q('legend').innerHTML='<span class="chip c-mh">Cụm Mật hạnh</span><span class="chip c-do">Đỏ · bắt buộc sửa</span><span class="chip c-cam">Cam · làm mờ</span><span class="chip c-ok">Giữ gốc</span>';document.getElementById('o-dx').textContent='Thứ tự em đề xuất'}
 lsLoad();
-renderBlocks();
-(async()=>{let got=false;const t=setTimeout(()=>{if(!got)setSave('Chưa kết nối được nơi lưu. Anh vẫn xem được; lựa chọn chỉ lưu khi có kết nối.',true)},10000);
+dec={"61-122": {"quyet": "dong_y", "van": null, "luc": "2026-11-25T06:04:34.452Z"}, "61-030": {"quyet": "dong_y", "van": null, "luc": "2026-11-25T06:01:45.937Z"}, "61-031": {"quyet": "dong_y", "van": null, "luc": "2026-11-25T06:01:52.039Z"}, "61-123": {"quyet": "giu_goc", "van": null, "luc": "2026-11-25T06:05:02.794Z"}, "61-032": {"quyet": "dong_y", "van": null, "luc": "2026-11-25T06:01:56.224Z"}, "61-121": {"quyet": "giu_goc", "van": null, "luc": "2026-11-25T06:04:04.089Z"}, "61-048": {"quyet": "giu_goc", "van": null, "luc": "2026-11-25T06:02:40.009Z"}};cumOrder=["C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10", "C11", "C12", "C13", "C14", "C15", "C16", "C17", "C18", "C19", "C20"];inner={};renderBlocks();
+(async()=>{setSave("Tập 61 đã duyệt xong 25-11-2026: anh chọn A ở 61.030–61.032 và 61.122; giữ gốc 61.048, 61.121, 61.123. Đã có Word.",false);return;let got=false;const t=setTimeout(()=>{if(!got)setSave('Chưa kết nối được nơi lưu. Anh vẫn xem được; lựa chọn chỉ lưu khi có kết nối.',true)},10000);
   try{db=window.claude?await window.claude.use('db'):null}catch(e){db=null}
   if(!db){clearTimeout(t);setSave(Object.keys(dec).length?'Đã mở lại lựa chọn lưu trong trình duyệt này.':'Lựa chọn sẽ lưu trong trình duyệt này. Duyệt xong anh bấm "Tải lựa chọn về".');return}
   db.collection(COL_D).onSnapshot(snap=>{got=true;clearTimeout(t);const nd={};snap.docs.forEach(s=>{if(s.exists)nd[s.id]=Object.assign({},s.data())});dec=nd;const editing=document.activeElement&&document.activeElement.tagName==='TEXTAREA';if(!editing)renderBlocks();else stats();setSave(snap.metadata.hasPendingWrites?'Đang lưu…':'Đã lưu, đã đồng bộ')},e=>{clearTimeout(t);setSave('Không đọc được lựa chọn đã lưu ('+(e&&e.code||'lỗi')+'). Tải lại trang để thử lại.',true)});
@@ -266,3 +266,4 @@ renderBlocks();
 })();
 })();
 </script>
+</body></html>
