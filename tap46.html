@@ -1,4 +1,4 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"></head><body><title>Duyệt Mật hạnh Tập 46</title>
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body><!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"></head><body><title>Duyệt Mật hạnh Tập 46</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Noto+Serif:wght@400;600&display=swap">
 <style>
@@ -229,8 +229,8 @@ function setFilter(f){filter=f;document.querySelectorAll('[data-f]').forEach(x=>
 document.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>setFilter(b.dataset.f));
 document.getElementById('tai').onclick=taiVe;document.getElementById('nap').onclick=()=>document.getElementById('nap-file').click();document.getElementById('nap-file').onchange=e=>{if(e.target.files[0])napFile(e.target.files[0]);e.target.value=''};
 lsLoad();
-renderBlocks();
-(async()=>{let got=false;const t=setTimeout(()=>{if(!got)setSave('Chưa kết nối được nơi lưu. Anh vẫn xem được; lựa chọn chỉ lưu khi có kết nối.',true)},10000);
+dec={"46-009": {"quyet": "dong_y", "van": null, "luc": "2026-11-25T01:48:00.043Z"}, "46-008": {"quyet": "dong_y", "van": null, "luc": "2026-11-25T01:47:58.306Z"}, "46-011": {"quyet": "dong_y", "van": null, "luc": "2026-11-25T01:48:05.125Z"}, "46-010": {"quyet": "dong_y", "van": null, "luc": "2026-11-25T01:48:02.572Z"}};cumOrder=["C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10", "C11", "C12", "C13"];inner={};renderBlocks();
+(async()=>{setSave("Tập 46 đã duyệt xong 25-11-2026: anh đồng ý đề xuất cả 4 thẻ. Đã có Word.",false);return;let got=false;const t=setTimeout(()=>{if(!got)setSave('Chưa kết nối được nơi lưu. Anh vẫn xem được; lựa chọn chỉ lưu khi có kết nối.',true)},10000);
   try{db=window.claude?await window.claude.use('db'):null}catch(e){db=null}
   if(!db){clearTimeout(t);setSave(Object.keys(dec).length?'Đã mở lại lựa chọn lưu trong trình duyệt này.':'Lựa chọn sẽ lưu trong trình duyệt này. Duyệt xong anh bấm "Tải lựa chọn về".');return}
   db.collection(COL_D).onSnapshot(snap=>{got=true;clearTimeout(t);const nd={};snap.docs.forEach(s=>{if(s.exists)nd[s.id]=Object.assign({},s.data())});dec=nd;const editing=document.activeElement&&document.activeElement.tagName==='TEXTAREA';if(!editing)renderBlocks();else stats();setSave(snap.metadata.hasPendingWrites?'Đang lưu…':'Đã lưu, đã đồng bộ')},e=>{clearTimeout(t);setSave('Không đọc được lựa chọn đã lưu ('+(e&&e.code||'lỗi')+'). Tải lại trang để thử lại.',true)});
@@ -238,4 +238,4 @@ renderBlocks();
 })();
 })();
 </script>
-</body></html>
+</body></html></body></html>
